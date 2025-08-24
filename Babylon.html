@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>BABYL∅N</title>
+  <script type="text/javascript" src="babylon_db.js"></script>
+  <script type="text/javascript" src="engine.js"></script>
+  <script type="text/javascript" src="babylon.js"></script>
+  <link rel="stylesheet" href="babylon.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="jquery-3.7.1.min.js"></script>
+</head>
+
+<body onload="onload()" onkeydown="keyPressed(event)" onscroll="onscroll()">
+
+  <!-- header -->
+  <div id="cool_header">
+    <div id="main_header_background" class="header_background"></div>
+    <div id="pavel" class="header_background"></div>
+    <div id="jirka" class="header_background"></div>
+    <div id="dawe" class="header_background"></div>
+  </div>
+  <div id="header_title">BABYL∅N</div>
+  <div id="languages" onclick="switch_languages()">
+    <span id="cz">cz</span> |
+    <span id="eng">eng</span>
+  </div>
+
+
+  <!-- phone header & menu -->
+  <div id="phone_header">
+    <span id="logo">
+      <a href="#top">BABYL<span class="∅">∅</span>N</a>
+    </span>
+    
+    <div id="phone_menu" onclick="toggle_filter_menu()">
+      <div id="open_menu">
+        <div class="stripe"></div>
+        <div class="stripe"></div>
+        <div class="stripe"></div>
+      </div>
+      <div id="close_menu">&times;</div>
+    </div>
+  </div>
+
+  <div id="main_wrap">
+    <main>
+
+      <!-- full screen gallery -->
+      <div id="opened_img_background" onclick="close_img()"></div>
+      <div id="opened_img_wrap">
+        <span id="cross" onclick="close_img()">&times;</span>
+        <span id="numbering"></span>
+        <div id="next_img" class="change_img" onclick="next_img()"><span class="arrow">&#x21E8</span></div>
+        <div id="previous_img" class="change_img" onclick="previous_img()"><span class="arrow">&#x21E6</span></div>
+        <img id="opened_img" width="100%">
+      </div>
+
+      <h1>BABYL∅N</h1>
+
+      <!-- gigs -->
+      <section>
+        <h2 id="koncerty">
+          <span class="cz">Koncerty</span>
+          <span class="eng">Gigs</span>
+        </h2>
+        <!-- gigs filter -->
+        <div id="show_filters" onclick="toggle_filter_menu()">
+          <span class="cz">Zobrazit filtry</span>
+          <span class="eng">Show filters</span>
+        </div>
+        <form onclick="load_gigs()" id="filters">
+          <div class="filter">
+            <label for="since" id="since_label">
+              <span class="cz">Od:</span>
+              <span class="eng">Since:</span>
+            </label>
+            <input type="date" id="since" name="since" onchange="filter()">
+            <br>
+            <label for="to" id="to_label">
+              <span class="cz">Do:</span>
+              <span class="eng">To: &nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </label>
+            <input type="date" id="to" name="to" onchange="filter()">
+          </div>
+          <div class="filter">
+            <label for="title" id="title_label">
+              <span class="cz">Název</span>
+              <span class="eng">Title</span>
+            </label><br>
+            <input type="text" id="title" name="title" placeholder="  Název" onkeyup="filter()">
+          </div>
+          <div class="filter">
+            <label for="city" id="city_label">
+              <span class="cz">Místo</span>
+              <span class="eng">Place</span>
+            </label><br>
+            <input type="text" id="city" name="city" placeholder="  Místo" onkeyup="filter()">
+          </div>
+          <div class="filter">
+            <input type="checkbox" id="acoustic" class="acoustic" name="acoustic" onchange="filter()">
+            <label for="acoustic" id="acoustic_label">
+              <span class="cz">Akusticky</span>
+              <span class="eng">Acoustic</span>
+            </label>
+            <br>
+            <input type="checkbox" id="photos" name="photos" onchange="filter()">
+            <label for="photos" id="photos_label">
+              <span class="cz">Fotky</span>
+              <span class="eng">Photos</span>
+            </label>
+          </div>
+          <input type="reset" value="Resetovat filtry" onclick="reset_gig_filters()" id="reset_filters">
+        </form>
+
+        <!-- gig counter -->
+        <div id="gig_count_wrap" class="background">
+          <i>
+            <span class="cz">Celkem koncertů:</span>
+            <span class="eng">Total gigs: </span>
+            <span id="gig_count"></span>
+          </i>
+        </div>
+
+        <!-- gig list -->
+        <div id="gigs" class="half background float" onscroll="gigs_on_scroll(this)">
+          <!-- <div class="scrollbar_container">
+                <div class="scrollbar" id="gigs_scrollbar"></div>
+              </div>   -->
+          <div id="gig_scroll_wrap">
+            <input id="gig_scroll" type="range" onchange="gigs_scroll_controler(value)"
+              onmousemove="gigs_scroll_controler(value)">
+          </div>
+        </div>
+
+        <!-- gig details -->
+        <div class="half background float">
+          <div id="gig_details">
+            <span id="details_title"></span><br>
+            <span id="details_city"></span><br>
+            <span id="details_date"></span><br>
+            <span id="details_acoustic"></span>
+            <span id="details_photographer"></span><br>
+          </div>
+        
+        <!-- gig gallery -->
+        <div id="gig_gallery"></div>
+        </div>
+        <div class="separator"></div>
+      </section>
+
+      <!-- timeline -->
+      <section>
+        <h2 id="timeline">
+          <span class="cz">Časová osa</span>
+          <span class="eng">Timeline</span>
+        </h2>
+        <table class="members_wrap">
+          <tbody id="members">
+            <tr id="members_header">
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
+        <div id="legend" class="half"></div>
+      </section>
+
+    </main>
+  </div>
+  
+
+  <!-- footer -->
+  <div id="footer">
+    <span class="cz">Webové stránky vytvořil Pavel Jančík</span>
+    <span class="eng">Website created by Pavel Jančík</span>
+  </div>
+
+  <script type="text/javascript" src="const.js"></script>
+</body>
+
+</html>
